@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — InfoTCA Soluções</title>
+  <meta name="description" content="Dicas de TI, segurança digital, Microsoft 365, manutenção de computadores e novidades em tecnologia pela equipe da InfoTCA.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4M7 8h2v5H7zM11 6h2v7h-2zM15 10h2v3h-2z"/>
+        </svg>
+      </div>
+      Info<span>TCA</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="planos.html">Planos & Preços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre Nós</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-primary nav-cta" style="padding:10px 20px;font-size:.85rem;">💬 WhatsApp</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / <span>Blog</span></div>
+    <span class="tag">Conteúdo técnico acessível</span>
+    <h1 style="margin-top:16px;">Blog <span class="neon">InfoTCA</span></h1>
+    <p style="max-width:520px;margin:16px auto 0;font-size:1.05rem;">Dicas práticas, artigos técnicos e novidades em tecnologia para empresas e usuários domésticos.</p>
+  </div>
+</section>
+
+<!-- POSTS -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+
+    <!-- Toolbar: filtros + busca -->
+    <div class="blog-toolbar fade-in">
+      <div class="blog-filters">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="dicas">Dicas de TI</button>
+        <button class="filter-btn" data-filter="m365">Microsoft 365</button>
+        <button class="filter-btn" data-filter="seguranca">Segurança</button>
+        <button class="filter-btn" data-filter="manutencao">Manutenção</button>
+        <button class="filter-btn" data-filter="cloud">Cloud</button>
+      </div>
+      <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="blog-search" placeholder="Buscar artigos…" aria-label="Buscar">
+      </div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="blog-grid fade-in">
+
+      <!-- Post 1 -->
+      <article class="blog-card" data-cat="seguranca">
+        <div class="blog-thumb">🔐</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Segurança</span>
+            <span class="blog-date">15 Nov 2024</span>
+          </div>
+          <h3>5 erros de segurança que sua empresa provavelmente está cometendo</h3>
+          <p>Senhas fracas, backups sem teste e ausência de MFA são mais comuns do que parece. Veja como identificar e corrigir essas vulnerabilidades antes que elas causem um problema real.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 2 -->
+      <article class="blog-card" data-cat="m365">
+        <div class="blog-thumb">☁️</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Microsoft 365</span>
+            <span class="blog-date">08 Nov 2024</span>
+          </div>
+          <h3>Microsoft Teams: recursos que sua equipe provavelmente não conhece</h3>
+          <p>Muito além das videochamadas — o Teams tem funcionalidades poderosas para produtividade, integração com apps e organização de projetos que a maioria das empresas ignora.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 3 -->
+      <article class="blog-card" data-cat="manutencao">
+        <div class="blog-thumb">🔧</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Manutenção</span>
+            <span class="blog-date">01 Nov 2024</span>
+          </div>
+          <h3>Meu notebook está lento: diagnóstico e soluções passo a passo</h3>
+          <p>Antes de comprar um computador novo, verifique se não é apenas uma questão de manutenção. Na maioria dos casos, uma limpeza e alguns ajustes resolvem o problema.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 4 -->
+      <article class="blog-card" data-cat="cloud">
+        <div class="blog-thumb">🌩️</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Cloud</span>
+            <span class="blog-date">25 Out 2024</span>
+          </div>
+          <h3>Backup na nuvem vs. local: qual é a melhor estratégia para PMEs?</h3>
+          <p>A regra 3-2-1 de backup existe por um bom motivo. Entenda as diferenças entre armazenamento local, nuvem pública e soluções híbridas para proteger os dados da sua empresa.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 5 -->
+      <article class="blog-card" data-cat="dicas">
+        <div class="blog-thumb">💡</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Dicas de TI</span>
+            <span class="blog-date">18 Out 2024</span>
+          </div>
+          <h3>Como organizar os cabos da sua empresa e melhorar o ambiente de trabalho</h3>
+          <p>Um rack organizado e uma rede bem documentada evitam horas de troubleshooting. Veja boas práticas simples de organização de infraestrutura que fazem toda a diferença.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 6 -->
+      <article class="blog-card" data-cat="seguranca">
+        <div class="blog-thumb">🛡️</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Segurança</span>
+            <span class="blog-date">10 Out 2024</span>
+          </div>
+          <h3>O que é ransomware e como proteger sua empresa de ataques em 2024</h3>
+          <p>Ataques de ransomware cresceram 300% nos últimos dois anos no Brasil. Entenda como esse tipo de ataque funciona e quais medidas são essenciais para proteger sua organização.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 7 -->
+      <article class="blog-card" data-cat="m365">
+        <div class="blog-thumb">📧</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Microsoft 365</span>
+            <span class="blog-date">02 Out 2024</span>
+          </div>
+          <h3>Migrar e-mail para Microsoft 365: guia completo para PMEs</h3>
+          <p>O processo de migração de e-mail pode parecer complexo, mas com planejamento adequado é tranquilo. Confira o passo a passo que usamos para migrar nossos clientes.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 8 -->
+      <article class="blog-card" data-cat="dicas">
+        <div class="blog-thumb">⚡</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Dicas de TI</span>
+            <span class="blog-date">24 Set 2024</span>
+          </div>
+          <h3>Windows 11: configurações que você deveria ajustar logo após a instalação</h3>
+          <p>Do telemetria ao modo de energia, o Windows 11 tem configurações padrão que vale a pena ajustar para melhorar privacidade, desempenho e experiência de uso.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+      <!-- Post 9 -->
+      <article class="blog-card" data-cat="cloud">
+        <div class="blog-thumb">🔗</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Cloud</span>
+            <span class="blog-date">16 Set 2024</span>
+          </div>
+          <h3>Azure vs. AWS para PMEs: qual plataforma faz mais sentido?</h3>
+          <p>Para empresas que já usam o ecossistema Microsoft, a escolha entre Azure e AWS pode parecer óbvia — mas não é sempre assim. Analisamos os critérios que realmente importam.</p>
+          <a href="blog-post.html" class="read-more">Ler artigo →</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Load More -->
+    <div style="text-align:center;margin-top:48px;" class="fade-in">
+      <button class="btn btn-outline" onclick="this.textContent='Sem mais artigos por enquanto 😊';this.disabled=true;">
+        Carregar mais artigos
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-banner fade-in">
+      <h2>Precisa de suporte técnico agora?</h2>
+      <p>Não espere o problema piorar. Fale com nossa equipe e resolva hoje.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+        <a href="contato.html" class="btn btn-outline">Formulário de Contato</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="display:inline-flex;">
+          <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M7 8h2v5H7zM11 6h2v7h-2zM15 10h2v3h-2z"/></svg></div>
+          Info<span>TCA</span>
+        </a>
+        <p>Tecnologia que resolve. Suporte que cuida. Atendemos empresas e residências em toda a Grande São Paulo.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">📸</a>
+          <a href="#" class="social-btn">f</a>
+          <a href="https://wa.me/5511999999999" target="_blank" class="social-btn">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="servicos.html">Suporte Empresarial</a></li>
+          <li><a href="servicos.html#infraestrutura">Infraestrutura</a></li>
+          <li><a href="servicos.html#microsoft365">Microsoft 365</a></li>
+          <li><a href="servicos.html#residencial">Suporte Residencial</a></li>
+          <li><a href="servicos.html#remoto">Suporte Remoto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="sobre.html">Sobre Nós</a></li>
+          <li><a href="planos.html">Planos & Preços</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Contato</a></li>
+          <li><a href="privacidade.html">Política de Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+5511999999999">(11) 99999-9999</a></li>
+          <li><a href="mailto:contato@infotca.com.br">contato@infotca.com.br</a></li>
+          <li><a href="#">São Paulo — SP</a></li>
+          <li><a href="#">Seg–Sex: 8h–18h</a></li>
+          <li><a href="#">Sáb: 9h–13h</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 InfoTCA Soluções em TI. Todos os direitos reservados.</p>
+      <div style="display:flex;gap:16px;">
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="contato.html">Suporte</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
