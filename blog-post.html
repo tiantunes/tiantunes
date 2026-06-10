@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5 erros de segurança que sua empresa está cometendo — Blog InfoTCA</title>
+  <meta name="description" content="Senhas fracas, backups sem teste e ausência de MFA são mais comuns do que parece. Veja como identificar e corrigir essas vulnerabilidades.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4M7 8h2v5H7zM11 6h2v7h-2zM15 10h2v3h-2z"/>
+        </svg>
+      </div>
+      Info<span>TCA</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="planos.html">Planos & Preços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="sobre.html">Sobre Nós</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-primary nav-cta" style="padding:10px 20px;font-size:.85rem;">💬 WhatsApp</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<section class="section">
+  <div class="container">
+
+    <div class="post-layout">
+
+      <!-- ── MAIN CONTENT ── -->
+      <article>
+        <header class="post-header">
+          <div class="breadcrumb" style="margin-bottom:20px;">
+            <a href="index.html">Home</a> / <a href="blog.html">Blog</a> / <span>Segurança</span>
+          </div>
+          <div class="blog-meta" style="margin-bottom:20px;">
+            <span class="blog-cat">Segurança</span>
+            <span class="blog-date">15 de novembro de 2024</span>
+            <span class="blog-date">• 8 min de leitura</span>
+          </div>
+          <h1>5 erros de segurança que sua empresa provavelmente está cometendo</h1>
+          <div class="post-meta" style="margin-top:20px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div class="author-avatar" style="width:36px;height:36px;font-size:1rem;">👤</div>
+              <div>
+                <strong style="color:var(--text);font-size:.9rem;display:block;">Equipe InfoTCA</strong>
+                <span style="font-size:.8rem;">Especialistas em Segurança de TI</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="post-body">
+          <p>A maioria dos incidentes de segurança em pequenas e médias empresas não acontece por causa de hackers sofisticados ou ataques de dia zero. Acontece por falhas básicas que poderiam ser evitadas com boas práticas simples.</p>
+
+          <p>Auditamos dezenas de ambientes corporativos aqui em São Paulo e os mesmos erros aparecem repetidamente — independente do segmento ou tamanho da empresa. Veja se você se identifica.</p>
+
+          <div class="callout">
+            <p><strong style="color:var(--neon);">⚠ Importante:</strong> Identificar uma vulnerabilidade é o primeiro passo. O segundo é agir antes de ser necessário. A maioria das empresas que sofre um incidente grave já tinha sido alertada sobre os riscos.</p>
+          </div>
+
+          <h2>1. Senhas fracas e reutilizadas</h2>
+          <p>Ainda em 2024, "123456", "empresa@2024" e o nome da empresa são senhas comuns em ambientes corporativos que auditamos. O problema se agrava quando a mesma senha é usada em múltiplos serviços — se um vaza, todos ficam comprometidos.</p>
+          <p><strong style="color:var(--text);">O que fazer:</strong> Implemente um gerenciador de senhas corporativo (Bitwarden, 1Password Teams ou similares) e defina uma política de senha com mínimo de 12 caracteres, letras, números e símbolos. Combine com MFA.</p>
+
+          <h2>2. Ausência de autenticação multifator (MFA)</h2>
+          <p>O MFA é a medida de segurança com maior retorno sobre investimento que existe. Segundo a Microsoft, 99,9% dos ataques de comprometimento de contas são bloqueados pelo MFA. Mesmo assim, muitas empresas não o utilizam por considerar inconveniente.</p>
+          <ul>
+            <li>Microsoft 365 permite MFA nativo sem custo adicional</li>
+            <li>Pode ser implementado em minutos para toda a organização</li>
+            <li>Microsoft Authenticator funciona offline (sem depender de SMS)</li>
+            <li>Políticas de Acesso Condicional permitem exceções para dispositivos confiáveis</li>
+          </ul>
+
+          <h2>3. Backups sem teste de restauração</h2>
+          <p>Ter backup não é garantia de segurança. O que garante é um backup que você consegue restaurar quando precisa. Já vimos empresas que tinham backups há anos — mas descobriram que estavam corrompidos exatamente no momento do incidente.</p>
+          <p><strong style="color:var(--text);">Regra prática:</strong> Se você não testou a restauração do backup nos últimos 30 dias, considere que você não tem backup. Reserve uma data mensal para fazer um teste de restauração de dados críticos.</p>
+
+          <div class="callout">
+            <p>A <strong style="color:var(--neon);">regra 3-2-1</strong> de backup: 3 cópias dos dados, em 2 mídias diferentes, sendo 1 offsite (nuvem ou localização física separada). Essa estratégia protege contra falha de hardware, incêndio e ransomware simultaneamente.</p>
+          </div>
+
+          <h2>4. Software desatualizado</h2>
+          <p>Atualizações de segurança corrigem vulnerabilidades conhecidas que os atacantes exploram ativamente. Manter o Windows, os aplicativos e os firmwares de roteadores/switches desatualizados é manter portas abertas que o fabricante já tentou fechar.</p>
+          <p>Isso vale especialmente para navegadores, Java, Adobe Reader e qualquer software que processa arquivos recebidos de externos — esses são os vetores de ataque mais comuns em ambientes corporativos.</p>
+
+          <h2>5. Sem política de acesso baseada em função</h2>
+          <p>Todo colaborador tendo acesso administrativo ao computador e acesso a todas as pastas compartilhadas é uma bomba relógio. O princípio do menor privilégio (cada usuário tem acesso apenas ao que precisa para trabalhar) é fundamental.</p>
+          <p>Na prática: usuários comuns não devem ser administradores locais. O acesso a pastas financeiras deve ser restrito ao departamento financeiro. E quando um colaborador sai da empresa, as credenciais devem ser revogadas imediatamente.</p>
+
+          <h2>Conclusão</h2>
+          <p>Nenhum desses erros exige investimento massivo para ser corrigido. A maioria é uma questão de configuração e política. O que falta, na maioria dos casos, é alguém que olhe para o ambiente com olhos técnicos e ajude a priorizar as ações.</p>
+          <p>Se você quer fazer um diagnóstico gratuito da segurança do seu ambiente, fale com a nossa equipe. Auditamos o ambiente, identificamos os pontos críticos e apresentamos um plano de ação claro e realista.</p>
+
+        </div>
+
+        <!-- Tags -->
+        <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <span style="font-size:.85rem;color:var(--text-muted);">Tags:</span>
+            <span class="blog-cat">Segurança</span>
+            <span class="blog-cat">MFA</span>
+            <span class="blog-cat">Backup</span>
+            <span class="blog-cat">PMEs</span>
+          </div>
+        </div>
+
+        <!-- CTA inline -->
+        <div class="cta-banner" style="margin-top:40px;text-align:left;padding:40px;">
+          <h3 style="margin-bottom:8px;font-size:1.3rem;">Sua empresa está segura?</h3>
+          <p>Fazemos um diagnóstico gratuito de segurança para novos clientes. Entre em contato e agende.</p>
+          <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+            <a href="https://wa.me/5511999999999?text=Quero%20fazer%20o%20diagnóstico%20de%20segurança." target="_blank" class="btn btn-whatsapp">💬 Agendar diagnóstico</a>
+            <a href="contato.html" class="btn btn-outline">Formulário de Contato</a>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- ── SIDEBAR ── -->
+      <aside>
+
+        <div class="sidebar-widget">
+          <h4>Sobre o Blog</h4>
+          <p style="font-size:.85rem;">Conteúdo técnico escrito pela equipe da InfoTCA para ajudar empresas e usuários domésticos a navegar melhor no mundo da tecnologia.</p>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4>Posts Relacionados</h4>
+          <div class="related-post">
+            <div class="related-thumb">🛡️</div>
+            <div>
+              <a href="blog-post.html">O que é ransomware e como proteger sua empresa</a>
+              <span>Segurança • 10 Out 2024</span>
+            </div>
+          </div>
+          <div class="related-post">
+            <div class="related-thumb">☁️</div>
+            <div>
+              <a href="blog-post.html">Backup na nuvem vs. local: qual estratégia?</a>
+              <span>Cloud • 25 Out 2024</span>
+            </div>
+          </div>
+          <div class="related-post">
+            <div class="related-thumb">📧</div>
+            <div>
+              <a href="blog-post.html">Migrar e-mail para Microsoft 365: guia completo</a>
+              <span>Microsoft 365 • 02 Out 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4>Categorias</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+            <a href="blog.html" style="display:flex;justify-content:space-between;font-size:.88rem;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">Dicas de TI <span style="color:var(--neon);">12</span></a>
+            <a href="blog.html" style="display:flex;justify-content:space-between;font-size:.88rem;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">Microsoft 365 <span style="color:var(--neon);">8</span></a>
+            <a href="blog.html" style="display:flex;justify-content:space-between;font-size:.88rem;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">Segurança <span style="color:var(--neon);">9</span></a>
+            <a href="blog.html" style="display:flex;justify-content:space-between;font-size:.88rem;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">Manutenção <span style="color:var(--neon);">6</span></a>
+            <a href="blog.html" style="display:flex;justify-content:space-between;font-size:.88rem;color:var(--text-muted);padding:6px 0;">Cloud <span style="color:var(--neon);">5</span></a>
+          </div>
+        </div>
+
+        <div class="sidebar-widget" style="background:rgba(0,255,136,.06);border-color:rgba(0,255,136,.2);">
+          <h4 style="color:var(--neon);">💬 Precisa de suporte?</h4>
+          <p style="font-size:.85rem;margin-bottom:16px;">Nossa equipe está pronta para ajudar. Atendimento rápido por WhatsApp ou formulário.</p>
+          <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-whatsapp" style="width:100%;justify-content:center;padding:10px;">Falar agora</a>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="display:inline-flex;">
+          <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M7 8h2v5H7zM11 6h2v7h-2zM15 10h2v3h-2z"/></svg></div>
+          Info<span>TCA</span>
+        </a>
+        <p>Tecnologia que resolve. Suporte que cuida. Atendemos empresas e residências em toda a Grande São Paulo.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">📸</a>
+          <a href="#" class="social-btn">f</a>
+          <a href="https://wa.me/5511999999999" target="_blank" class="social-btn">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="servicos.html">Suporte Empresarial</a></li>
+          <li><a href="servicos.html#infraestrutura">Infraestrutura</a></li>
+          <li><a href="servicos.html#microsoft365">Microsoft 365</a></li>
+          <li><a href="servicos.html#residencial">Suporte Residencial</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="sobre.html">Sobre Nós</a></li>
+          <li><a href="planos.html">Planos & Preços</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Contato</a></li>
+          <li><a href="privacidade.html">Política de Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+5511999999999">(11) 99999-9999</a></li>
+          <li><a href="mailto:contato@infotca.com.br">contato@infotca.com.br</a></li>
+          <li><a href="#">São Paulo — SP</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 InfoTCA Soluções em TI. Todos os direitos reservados.</p>
+      <div style="display:flex;gap:16px;">
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="contato.html">Suporte</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
