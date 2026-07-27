@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meu Treino</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --card:#1a1d24;
+    --card-2:#20242c;
+    --text:#eef0f3;
+    --muted:#9aa2ad;
+    --accent:#4ade80;
+    --accent-2:#38bdf8;
+    --accent-3:#a78bfa;
+    --danger:#f87171;
+    --border:#2a2f39;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding-bottom:40px;
+  }
+  .container{
+    max-width:520px;
+    margin:0 auto;
+    padding:16px;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    position:sticky;
+    top:0;
+    background:rgba(15,17,21,0.92);
+    backdrop-filter:blur(6px);
+    z-index:10;
+    border-bottom:1px solid var(--border);
+  }
+  header h1{
+    font-size:18px;
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .icon-btn{
+    background:var(--card-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:10px;
+    padding:8px 10px;
+    font-size:16px;
+    cursor:pointer;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:16px;
+  }
+  .day-name{
+    color:var(--muted);
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .day-title{
+    font-size:22px;
+    font-weight:700;
+    margin:4px 0 10px;
+  }
+  .badge{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    padding:3px 10px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .badge-treino{background:rgba(74,222,128,0.15);color:var(--accent);}
+  .badge-cardio{background:rgba(56,189,248,0.15);color:var(--accent-2);}
+  .badge-ativo{background:rgba(167,139,250,0.15);color:var(--accent-3);}
+  .badge-descanso{background:rgba(154,162,173,0.15);color:var(--muted);}
+
+  .task-list{list-style:none;padding:0;margin:0;}
+  .task{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .task:last-child{border-bottom:none;}
+  .task input[type=checkbox]{
+    appearance:none;
+    -webkit-appearance:none;
+    width:26px;
+    height:26px;
+    min-width:26px;
+    border-radius:8px;
+    border:2px solid var(--border);
+    background:var(--card-2);
+    cursor:pointer;
+    position:relative;
+    margin-top:2px;
+  }
+  .task input[type=checkbox]:checked{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .task input[type=checkbox]:checked::after{
+    content:"✓";
+    position:absolute;
+    left:5px;
+    top:0px;
+    color:#0f1115;
+    font-weight:800;
+    font-size:16px;
+  }
+  .task .task-body{flex:1;}
+  .task .task-name{
+    font-weight:600;
+    font-size:15.5px;
+  }
+  .task.done .task-name{
+    text-decoration:line-through;
+    color:var(--muted);
+  }
+  .task .task-detail{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:2px;
+  }
+  .timer-btn{
+    background:var(--card-2);
+    border:1px solid var(--border);
+    color:var(--accent-2);
+    border-radius:8px;
+    font-size:12px;
+    padding:4px 8px;
+    margin-top:6px;
+    cursor:pointer;
+    display:inline-block;
+  }
+  .timer-btn.running{
+    color:var(--accent);
+    border-color:var(--accent);
+  }
+  .load-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+  }
+  .load-row label{
+    font-size:12px;
+    color:var(--muted);
+  }
+  .load-row input{
+    width:64px;
+    background:var(--card-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:5px 8px;
+    font-size:13.5px;
+  }
+  .load-hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+
+  .progress-wrap{
+    margin:14px 0 4px;
+  }
+  .progress-bar{
+    height:8px;
+    background:var(--card-2);
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    width:0%;
+    transition:width .25s ease;
+  }
+  .progress-label{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:6px;
+  }
+
+  .btn{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:14px;
+  }
+  .btn-primary{background:var(--accent);color:#0f1115;}
+  .btn-primary:disabled{background:var(--card-2);color:var(--muted);cursor:not-allowed;}
+  .btn-secondary{background:var(--card-2);color:var(--text);border:1px solid var(--border);}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+
+  .done-state{
+    text-align:center;
+    padding:10px 0 4px;
+  }
+  .done-state .emoji{font-size:38px;}
+  .done-state h2{margin:8px 0 4px;font-size:19px;}
+  .done-state p{color:var(--muted);margin:0 0 10px;font-size:14px;}
+
+  .section-title{
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--muted);
+    margin:0 0 12px;
+  }
+
+  .stats-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .stat{
+    flex:1;
+    background:var(--card-2);
+    border-radius:12px;
+    padding:10px;
+    text-align:center;
+  }
+  .stat .stat-num{font-size:20px;font-weight:800;}
+  .stat .stat-label{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  .heatmap{
+    display:grid;
+    grid-auto-flow:column;
+    grid-template-rows:repeat(7,1fr);
+    gap:3px;
+    overflow-x:auto;
+    padding-bottom:6px;
+  }
+  .hm-cell{
+    width:13px;
+    height:13px;
+    border-radius:3px;
+    background:var(--card-2);
+  }
+  .hm-treino{background:var(--accent);}
+  .hm-cardio{background:var(--accent-2);}
+  .hm-ativo{background:var(--accent-3);}
+  .hm-descanso{background:#4b5563;}
+  .hm-future{background:transparent;}
+
+  .legend{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:10px;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+
+  .modal-backdrop{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.6);
+    display:flex;align-items:flex-end;justify-content:center;
+    z-index:50;
+  }
+  .modal-backdrop[hidden]{display:none;}
+  .modal{
+    background:var(--card);
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+    max-width:520px;
+    width:100%;
+    max-height:85vh;
+    overflow-y:auto;
+    padding:20px;
+    border:1px solid var(--border);
+    border-bottom:none;
+  }
+  .modal h2{margin-top:0;font-size:19px;}
+  .modal h3{font-size:14px;color:var(--accent);margin:18px 0 6px;}
+  .modal p, .modal li{font-size:14px;color:var(--text);line-height:1.5;}
+  .modal ul{margin:4px 0;padding-left:18px;}
+  .close-x{
+    float:right;
+    background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:20px;
+    padding:0 16px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏋️ Meu Treino</h1>
+  <button class="icon-btn" id="guideBtn" title="Guia e dicas">ℹ️ Guia</button>
+</header>
+
+<div class="container">
+  <div class="card" id="todayCard"></div>
+
+  <div class="card">
+    <div class="section-title">Habit Tracker</div>
+    <div class="stats-row" id="statsRow"></div>
+    <div class="heatmap" id="heatmap"></div>
+    <div class="legend">
+      <span><i class="hm-treino"></i> Treino</span>
+      <span><i class="hm-cardio"></i> Cardio</span>
+      <span><i class="hm-ativo"></i> Ativo</span>
+      <span><i class="hm-descanso"></i> Descanso</span>
+      <span><i style="background:var(--card-2)"></i> Sem registro</span>
+    </div>
+  </div>
+
+  <footer>Tudo é salvo localmente no seu navegador (localStorage). Nenhum dado sai do seu dispositivo.</footer>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal">
+    <button class="close-x" id="closeGuide">×</button>
+    <h2>Guia rápido</h2>
+
+    <h3>📈 Progressão</h3>
+    <p>Quando conseguir fazer todas as repetições com facilidade por duas semanas consecutivas, aumente a carga entre 2,5% e 5%. Nunca aumente carga e volume ao mesmo tempo.</p>
+
+    <h3>💪 Intensidade (RPE)</h3>
+    <p>Primeiras semanas: RPE 6–7. Depois: RPE 7–8. Evite treinar em RPE 10 constantemente.</p>
+
+    <h3>⚡ Pouca energia (tirzepatida)</h3>
+    <ul>
+      <li>Opção 1: reduza uma série de cada exercício (ex: 3 → 2 séries).</li>
+      <li>Opção 2: reduza a carga em cerca de 10–15%.</li>
+      <li>Opção 3: faça só os principais (Supino, Remada, Leg Press, Stiff) — 30–40 min já é um treino eficiente.</li>
+    </ul>
+
+    <h3>😵 Se sentir tontura</h3>
+    <p>Pare imediatamente, sente-se, hidrate-se e espere. Se não melhorar, encerre o treino. No próximo treino, diminua a intensidade, evite prender a respiração e prefira treinar 60–90 min após uma refeição leve. Tontura frequente ou intensa: converse com o médico.</p>
+
+    <h3>🧮 Volume semanal alvo</h3>
+    <p>Peito: 6 · Costas: 8–9 · Ombros: 5 · Quadríceps: 8 · Posteriores: 6 · Bíceps: 2 · Tríceps: 2 · Core: 6 (séries/semana)</p>
+
+    <h3>✅ Recomendações extras</h3>
+    <ul>
+      <li>Priorize proteína ao longo do dia (~1,6–2,2 g/kg de massa magra ou conforme seu nutricionista).</li>
+      <li>Durma 7–9 horas por noite.</li>
+      <li>Mantenha boa hidratação e reposição de eletrólitos, especialmente em dias quentes ou de cardio.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DAYS = {
+    1: { key:'seg', name:'Segunda-feira', title:'Treino A – Parte Superior', type:'treino', tasks:[
+      { n:'Aquecimento', d:'Caminhada + mobilidade de ombros e torácica · 10 minutos' },
+      { n:'Supino Máquina ou Halteres', d:'3 séries × 8–10 reps', rest:90, load:true },
+      { n:'Remada Baixa', d:'3 séries × 8–10 reps', rest:90, load:true },
+      { n:'Desenvolvimento de Ombros', d:'3 séries × 10 reps', rest:75, load:true },
+      { n:'Puxada Frontal', d:'3 séries × 10 reps', rest:75, load:true },
+      { n:'Tríceps Corda', d:'2 séries × 12 reps', rest:60, load:true },
+      { n:'Rosca Direta', d:'2 séries × 12 reps', rest:60, load:true },
+      { n:'Prancha', d:'3 séries × 30–45 segundos' }
+    ]},
+    2: { key:'ter', name:'Terça-feira', title:'Cardio + Mobilidade', type:'cardio', tasks:[
+      { n:'Aquecimento', d:'10 minutos' },
+      { n:'Cardio Zona 2', d:'20–35 min · caminhada / bicicleta / elíptico — consegue conversar enquanto anda' },
+      { n:'Mobilidade geral', d:'8–10 min' }
+    ]},
+    3: { key:'qua', name:'Quarta-feira', title:'Treino B – Parte Inferior', type:'treino', tasks:[
+      { n:'Aquecimento', d:'Caminhada + mobilidade de quadril · 10 minutos' },
+      { n:'Leg Press', d:'3 séries × 10 reps', rest:90, load:true },
+      { n:'Mesa Flexora', d:'3 séries × 10–12 reps', rest:75, load:true },
+      { n:'Cadeira Extensora', d:'2 séries × 12 reps', rest:60, load:true },
+      { n:'Stiff com Halteres', d:'3 séries × 8–10 reps', rest:90, load:true },
+      { n:'Panturrilha', d:'3 séries × 15 reps', rest:45, load:true },
+      { n:'Abdominal Máquina', d:'3 séries × 12 reps', load:true }
+    ]},
+    4: { key:'qui', name:'Quinta-feira', title:'Descanso Ativo', type:'ativo', tasks:[
+      { n:'Caminhada leve', d:'15–20 min' },
+      { n:'Alongamento / mobilidade', d:'10–15 min' },
+      { n:'Hidratação e eletrólitos', d:'Especialmente importante nesse dia' }
+    ]},
+    5: { key:'sex', name:'Sexta-feira', title:'Treino C – Corpo Inteiro (ênfase força)', type:'treino', tasks:[
+      { n:'Aquecimento', d:'10 minutos' },
+      { n:'Agachamento Goblet', d:'3 séries × 8 reps', load:true },
+      { n:'Supino Inclinado', d:'3 séries × 8 reps', load:true },
+      { n:'Remada', d:'3 séries × 8 reps', load:true },
+      { n:'Desenvolvimento', d:'2 séries × 10 reps', load:true },
+      { n:'Afundo', d:'2 séries × 10 reps (cada perna)', load:true },
+      { n:'Pulldown', d:'2 séries × 10 reps', load:true },
+      { n:'Farmer Walk', d:'3 caminhadas de 30 segundos', load:true }
+    ]},
+    6: { key:'sab', name:'Sábado', title:'Cardio Leve (opcional)', type:'cardio', tasks:[
+      { n:'Cardio leve', d:'20–30 min · Zona 2 · caminhada / bicicleta / elíptico (opcional)' }
+    ]},
+    0: { key:'dom', name:'Domingo', title:'Descanso Total', type:'descanso', tasks:[] }
+  };
+
+  var TYPE_LABEL = { treino:'Treino', cardio:'Cardio', ativo:'Descanso Ativo', descanso:'Descanso' };
+
+  function pad(n){ return n<10 ? '0'+n : ''+n; }
+  function todayKey(d){ d = d || new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+
+  var now = new Date();
+  var dow = now.getDay();
+  var dateKey = todayKey(now);
+  var day = DAYS[dow];
+
+  var STATE_KEY = 'treino_state_' + dateKey;
+  var HISTORY_KEY = 'treino_history';
+
+  function loadState(){
+    try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveState(s){ localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
+
+  function loadHistory(){
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveHistory(h){ localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
+
+  var LAST_LOADS_KEY = 'treino_last_loads';
+  function loadLastLoads(){
+    try { return JSON.parse(localStorage.getItem(LAST_LOADS_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveLastLoads(o){ localStorage.setItem(LAST_LOADS_KEY, JSON.stringify(o)); }
+
+  var state = loadState();
+  if(!state.checks) state.checks = {};
+  if(!state.loads) state.loads = {};
+
+  var todayCard = document.getElementById('todayCard');
+  var timers = {};
+
+  function fmtDatePretty(d){
+    var months=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    return d.getDate()+' de '+months[d.getMonth()];
+  }
+
+  function beep(){
+    try{
+      var ctx = new (window.AudioContext||window.webkitAudioContext)();
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 880;
+      g.gain.value = 0.15;
+      o.start();
+      setTimeout(function(){ o.stop(); ctx.close(); }, 350);
+    }catch(e){}
+    if(navigator.vibrate) navigator.vibrate([200,100,200]);
+  }
+
+  function startTimer(taskId, seconds, btn){
+    if(timers[taskId]){
+      clearInterval(timers[taskId].int);
+    }
+    var remaining = seconds;
+    btn.textContent = '⏱ ' + remaining + 's';
+    btn.classList.add('running');
+    timers[taskId] = { int: setInterval(function(){
+      remaining--;
+      if(remaining <= 0){
+        clearInterval(timers[taskId].int);
+        delete timers[taskId];
+        btn.textContent = '⏱ ' + seconds + 's';
+        btn.classList.remove('running');
+        beep();
+      } else {
+        btn.textContent = '⏱ ' + remaining + 's';
+      }
+    }, 1000) };
+  }
+
+  function allChecked(){
+    if(day.tasks.length === 0) return true;
+    for(var i=0;i<day.tasks.length;i++){
+      if(!state.checks[i]) return false;
+    }
+    return true;
+  }
+
+  function countChecked(){
+    var c = 0;
+    for(var i=0;i<day.tasks.length;i++){ if(state.checks[i]) c++; }
+    return c;
+  }
+
+  function commitToHistory(){
+    var h = loadHistory();
+    h[dateKey] = {
+      dayKey: day.key,
+      title: day.title,
+      type: day.type,
+      done: countChecked(),
+      total: day.tasks.length,
+      loads: Object.assign({}, state.loads),
+      completedAt: Date.now()
+    };
+    saveHistory(h);
+  }
+
+  function setLoad(taskName, value){
+    state.loads[taskName] = value;
+    saveState(state);
+    var lastLoads = loadLastLoads();
+    if(value){
+      lastLoads[taskName] = value;
+      saveLastLoads(lastLoads);
+    }
+  }
+
+  function render(){
+    var html = '';
+    html += '<div class="day-name">'+day.name+' · '+fmtDatePretty(now)+'</div>';
+    html += '<div class="day-title">'+day.title+'</div>';
+    html += '<span class="badge badge-'+day.type+'">'+TYPE_LABEL[day.type]+'</span>';
+
+    if(state.completed){
+      html += '<div class="done-state">';
+      html += '<div class="emoji">✅</div>';
+      html += '<h2>Treino concluído hoje!</h2>';
+      html += '<p>'+countChecked()+'/'+day.tasks.length+' exercícios concluídos. Mandou bem 💪</p>';
+      html += '</div>';
+      html += '<button class="btn btn-ghost" id="redoBtn">Refazer treino de hoje</button>';
+      todayCard.innerHTML = html;
+      document.getElementById('redoBtn').onclick = function(){
+        if(confirm('Isso vai reiniciar o progresso de hoje. Continuar?')){
+          state = { started:false, completed:false, checks:{}, loads:{} };
+          saveState(state);
+          render();
+        }
+      };
+      return;
+    }
+
+    if(day.tasks.length === 0){
+      html += '<p style="color:var(--muted);font-size:14px;">Hoje é dia de descanso total. Aproveite para recuperar — durma bem e hidrate-se.</p>';
+      html += '<button class="btn btn-primary" id="finishRestBtn">Concluir dia de descanso</button>';
+      todayCard.innerHTML = html;
+      document.getElementById('finishRestBtn').onclick = function(){
+        state.completed = true;
+        saveState(state);
+        commitToHistory();
+        render();
+        renderHabitTracker();
+      };
+      return;
+    }
+
+    if(!state.started){
+      var lastLoadsPreview = loadLastLoads();
+      html += '<ul class="task-list">';
+      day.tasks.forEach(function(t){
+        html += '<li class="task"><div class="task-body"><div class="task-name">'+t.n+'</div><div class="task-detail">'+t.d+'</div>';
+        if(t.load && lastLoadsPreview[t.n]){
+          html += '<div class="load-hint">Última carga: '+lastLoadsPreview[t.n]+' kg</div>';
+        }
+        html += '</div></li>';
+      });
+      html += '</ul>';
+      html += '<button class="btn btn-primary" id="startBtn">Iniciar Treino</button>';
+      todayCard.innerHTML = html;
+      document.getElementById('startBtn').onclick = function(){
+        state.started = true;
+        saveState(state);
+        render();
+      };
+      return;
+    }
+
+    // in progress
+    var lastLoads = loadLastLoads();
+    html += '<ul class="task-list">';
+    day.tasks.forEach(function(t, i){
+      var checked = !!state.checks[i];
+      html += '<li class="task'+(checked?' done':'')+'">';
+      html += '<input type="checkbox" data-idx="'+i+'" '+(checked?'checked':'')+'>';
+      html += '<div class="task-body"><div class="task-name">'+t.n+'</div><div class="task-detail">'+t.d+'</div>';
+      if(t.rest){
+        html += '<span class="timer-btn" data-idx="'+i+'" data-rest="'+t.rest+'">⏱ '+t.rest+'s</span>';
+      }
+      if(t.load){
+        var loadVal = (state.loads[t.n] !== undefined) ? state.loads[t.n] : (lastLoads[t.n] || '');
+        html += '<div class="load-row"><label for="load-'+i+'">Carga</label>';
+        html += '<input type="number" inputmode="decimal" step="0.5" min="0" id="load-'+i+'" data-name="'+t.n.replace(/"/g,'&quot;')+'" value="'+loadVal+'" placeholder="kg">';
+        html += '<label for="load-'+i+'">kg</label></div>';
+      }
+      html += '</div></li>';
+    });
+    html += '</ul>';
+
+    var done = countChecked();
+    var total = day.tasks.length;
+    var pct = Math.round((done/total)*100);
+    html += '<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%"></div></div>';
+    html += '<div class="progress-label">'+done+'/'+total+' exercícios concluídos</div></div>';
+
+    var canFinish = allChecked();
+    html += '<button class="btn btn-primary" id="finishBtn" '+(canFinish?'':'disabled')+'>Terminar Treino</button>';
+
+    todayCard.innerHTML = html;
+
+    todayCard.querySelectorAll('input[type=checkbox]').forEach(function(cb){
+      cb.addEventListener('change', function(){
+        var idx = this.getAttribute('data-idx');
+        state.checks[idx] = this.checked;
+        saveState(state);
+        render();
+      });
+    });
+    todayCard.querySelectorAll('.timer-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var idx = this.getAttribute('data-idx');
+        var rest = parseInt(this.getAttribute('data-rest'),10);
+        startTimer(idx, rest, this);
+      });
+    });
+    todayCard.querySelectorAll('.load-row input').forEach(function(inp){
+      inp.addEventListener('input', function(){
+        setLoad(this.getAttribute('data-name'), this.value);
+      });
+    });
+    var finishBtn = document.getElementById('finishBtn');
+    if(finishBtn){
+      finishBtn.onclick = function(){
+        state.completed = true;
+        saveState(state);
+        commitToHistory();
+        render();
+        renderHabitTracker();
+      };
+    }
+  }
+
+  // ---------- Habit tracker ----------
+  var TYPE_CLASS = { treino:'hm-treino', cardio:'hm-cardio', ativo:'hm-ativo', descanso:'hm-descanso' };
+
+  function renderHabitTracker(){
+    var history = loadHistory();
+    var heatmap = document.getElementById('heatmap');
+    var statsRow = document.getElementById('statsRow');
+
+    var WEEKS = 14;
+    var totalDays = WEEKS*7;
+    var end = new Date(now);
+    // align to end of this week (Saturday) so columns are stable weeks
+    var endOffset = 6 - end.getDay();
+    end.setDate(end.getDate() + endOffset);
+    var start = new Date(end);
+    start.setDate(start.getDate() - (totalDays-1));
+
+    var cellsHtml = '';
+    for(var i=0;i<totalDays;i++){
+      var d = new Date(start);
+      d.setDate(d.getDate()+i);
+      var key = todayKey(d);
+      var cls = 'hm-cell';
+      var title = key;
+      if(d > now){
+        cls += ' hm-future';
+      } else if(history[key]){
+        cls += ' ' + TYPE_CLASS[history[key].type];
+        title += ' · ' + history[key].title + ' ('+history[key].done+'/'+history[key].total+')';
+      } else {
+        title += ' · sem registro';
+      }
+      cellsHtml += '<div class="'+cls+'" title="'+title+'"></div>';
+    }
+    heatmap.innerHTML = cellsHtml;
+
+    // stats
+    var keys = Object.keys(history);
+    var totalSessions = keys.length;
+
+    var streak = 0;
+    var cursor = new Date(now);
+    if(!history[todayKey(cursor)]){
+      cursor.setDate(cursor.getDate()-1);
+    }
+    while(history[todayKey(cursor)]){
+      streak++;
+      cursor.setDate(cursor.getDate()-1);
+    }
+
+    var weekStart = new Date(now);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+    var weekCount = 0;
+    for(var w=0; w<7; w++){
+      var wd = new Date(weekStart);
+      wd.setDate(wd.getDate()+w);
+      if(history[todayKey(wd)]) weekCount++;
+    }
+
+    statsRow.innerHTML =
+      '<div class="stat"><div class="stat-num">'+streak+'</div><div class="stat-label">🔥 Sequência (dias)</div></div>'+
+      '<div class="stat"><div class="stat-num">'+weekCount+'/7</div><div class="stat-label">Essa semana</div></div>'+
+      '<div class="stat"><div class="stat-num">'+totalSessions+'</div><div class="stat-label">Total registrado</div></div>';
+  }
+
+  // ---------- Guide modal ----------
+  var modalBackdrop = document.getElementById('modalBackdrop');
+  document.getElementById('guideBtn').addEventListener('click', function(){
+    modalBackdrop.hidden = false;
+  });
+  document.getElementById('closeGuide').addEventListener('click', function(){
+    modalBackdrop.hidden = true;
+  });
+  modalBackdrop.addEventListener('click', function(e){
+    if(e.target === modalBackdrop) modalBackdrop.hidden = true;
+  });
+
+  render();
+  renderHabitTracker();
+})();
+</script>
+
+</body>
+</html>
