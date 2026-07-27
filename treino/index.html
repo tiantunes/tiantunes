@@ -153,6 +153,30 @@
     color:var(--accent);
     border-color:var(--accent);
   }
+  .load-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+  }
+  .load-row label{
+    font-size:12px;
+    color:var(--muted);
+  }
+  .load-row input{
+    width:64px;
+    background:var(--card-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:5px 8px;
+    font-size:13.5px;
+  }
+  .load-hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
+  }
 
   .progress-wrap{
     margin:14px 0 4px;
@@ -353,31 +377,28 @@
 
   var DAYS = {
     1: { key:'seg', name:'Segunda-feira', title:'Treino A – Parte Superior', type:'treino', tasks:[
-      { n:'Caminhada', d:'Aquecimento · ~3 min' },
-      { n:'Mobilidade de ombros', d:'Aquecimento' },
-      { n:'Mobilidade torácica', d:'Aquecimento' },
-      { n:'Supino Máquina ou Halteres', d:'3 séries × 8–10 reps', rest:90 },
-      { n:'Remada Baixa', d:'3 séries × 8–10 reps', rest:90 },
-      { n:'Desenvolvimento de Ombros', d:'3 séries × 10 reps', rest:75 },
-      { n:'Puxada Frontal', d:'3 séries × 10 reps', rest:75 },
-      { n:'Tríceps Corda', d:'2 séries × 12 reps', rest:60 },
-      { n:'Rosca Direta', d:'2 séries × 12 reps', rest:60 },
+      { n:'Aquecimento', d:'Caminhada + mobilidade de ombros e torácica · 10 minutos' },
+      { n:'Supino Máquina ou Halteres', d:'3 séries × 8–10 reps', rest:90, load:true },
+      { n:'Remada Baixa', d:'3 séries × 8–10 reps', rest:90, load:true },
+      { n:'Desenvolvimento de Ombros', d:'3 séries × 10 reps', rest:75, load:true },
+      { n:'Puxada Frontal', d:'3 séries × 10 reps', rest:75, load:true },
+      { n:'Tríceps Corda', d:'2 séries × 12 reps', rest:60, load:true },
+      { n:'Rosca Direta', d:'2 séries × 12 reps', rest:60, load:true },
       { n:'Prancha', d:'3 séries × 30–45 segundos' }
     ]},
     2: { key:'ter', name:'Terça-feira', title:'Cardio + Mobilidade', type:'cardio', tasks:[
-      { n:'Aquecimento leve', d:'3–5 min' },
+      { n:'Aquecimento', d:'10 minutos' },
       { n:'Cardio Zona 2', d:'20–35 min · caminhada / bicicleta / elíptico — consegue conversar enquanto anda' },
       { n:'Mobilidade geral', d:'8–10 min' }
     ]},
     3: { key:'qua', name:'Quarta-feira', title:'Treino B – Parte Inferior', type:'treino', tasks:[
-      { n:'Caminhada', d:'Aquecimento · 5–8 min' },
-      { n:'Mobilidade de quadril', d:'Aquecimento' },
-      { n:'Leg Press', d:'3 séries × 10 reps', rest:90 },
-      { n:'Mesa Flexora', d:'3 séries × 10–12 reps', rest:75 },
-      { n:'Cadeira Extensora', d:'2 séries × 12 reps', rest:60 },
-      { n:'Stiff com Halteres', d:'3 séries × 8–10 reps', rest:90 },
-      { n:'Panturrilha', d:'3 séries × 15 reps', rest:45 },
-      { n:'Abdominal Máquina', d:'3 séries × 12 reps' }
+      { n:'Aquecimento', d:'Caminhada + mobilidade de quadril · 10 minutos' },
+      { n:'Leg Press', d:'3 séries × 10 reps', rest:90, load:true },
+      { n:'Mesa Flexora', d:'3 séries × 10–12 reps', rest:75, load:true },
+      { n:'Cadeira Extensora', d:'2 séries × 12 reps', rest:60, load:true },
+      { n:'Stiff com Halteres', d:'3 séries × 8–10 reps', rest:90, load:true },
+      { n:'Panturrilha', d:'3 séries × 15 reps', rest:45, load:true },
+      { n:'Abdominal Máquina', d:'3 séries × 12 reps', load:true }
     ]},
     4: { key:'qui', name:'Quinta-feira', title:'Descanso Ativo', type:'ativo', tasks:[
       { n:'Caminhada leve', d:'15–20 min' },
@@ -385,14 +406,14 @@
       { n:'Hidratação e eletrólitos', d:'Especialmente importante nesse dia' }
     ]},
     5: { key:'sex', name:'Sexta-feira', title:'Treino C – Corpo Inteiro (ênfase força)', type:'treino', tasks:[
-      { n:'Aquecimento leve', d:'5–8 min' },
-      { n:'Agachamento Goblet', d:'3 séries × 8 reps' },
-      { n:'Supino Inclinado', d:'3 séries × 8 reps' },
-      { n:'Remada', d:'3 séries × 8 reps' },
-      { n:'Desenvolvimento', d:'2 séries × 10 reps' },
-      { n:'Afundo', d:'2 séries × 10 reps (cada perna)' },
-      { n:'Pulldown', d:'2 séries × 10 reps' },
-      { n:'Farmer Walk', d:'3 caminhadas de 30 segundos' }
+      { n:'Aquecimento', d:'10 minutos' },
+      { n:'Agachamento Goblet', d:'3 séries × 8 reps', load:true },
+      { n:'Supino Inclinado', d:'3 séries × 8 reps', load:true },
+      { n:'Remada', d:'3 séries × 8 reps', load:true },
+      { n:'Desenvolvimento', d:'2 séries × 10 reps', load:true },
+      { n:'Afundo', d:'2 séries × 10 reps (cada perna)', load:true },
+      { n:'Pulldown', d:'2 séries × 10 reps', load:true },
+      { n:'Farmer Walk', d:'3 caminhadas de 30 segundos', load:true }
     ]},
     6: { key:'sab', name:'Sábado', title:'Cardio Leve (opcional)', type:'cardio', tasks:[
       { n:'Cardio leve', d:'20–30 min · Zona 2 · caminhada / bicicleta / elíptico (opcional)' }
@@ -425,8 +446,16 @@
   }
   function saveHistory(h){ localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
 
+  var LAST_LOADS_KEY = 'treino_last_loads';
+  function loadLastLoads(){
+    try { return JSON.parse(localStorage.getItem(LAST_LOADS_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveLastLoads(o){ localStorage.setItem(LAST_LOADS_KEY, JSON.stringify(o)); }
+
   var state = loadState();
   if(!state.checks) state.checks = {};
+  if(!state.loads) state.loads = {};
 
   var todayCard = document.getElementById('todayCard');
   var timers = {};
@@ -493,9 +522,20 @@
       type: day.type,
       done: countChecked(),
       total: day.tasks.length,
+      loads: Object.assign({}, state.loads),
       completedAt: Date.now()
     };
     saveHistory(h);
+  }
+
+  function setLoad(taskName, value){
+    state.loads[taskName] = value;
+    saveState(state);
+    var lastLoads = loadLastLoads();
+    if(value){
+      lastLoads[taskName] = value;
+      saveLastLoads(lastLoads);
+    }
   }
 
   function render(){
@@ -514,7 +554,7 @@
       todayCard.innerHTML = html;
       document.getElementById('redoBtn').onclick = function(){
         if(confirm('Isso vai reiniciar o progresso de hoje. Continuar?')){
-          state = { started:false, completed:false, checks:{} };
+          state = { started:false, completed:false, checks:{}, loads:{} };
           saveState(state);
           render();
         }
@@ -537,9 +577,14 @@
     }
 
     if(!state.started){
+      var lastLoadsPreview = loadLastLoads();
       html += '<ul class="task-list">';
       day.tasks.forEach(function(t){
-        html += '<li class="task"><div class="task-body"><div class="task-name">'+t.n+'</div><div class="task-detail">'+t.d+'</div></div></li>';
+        html += '<li class="task"><div class="task-body"><div class="task-name">'+t.n+'</div><div class="task-detail">'+t.d+'</div>';
+        if(t.load && lastLoadsPreview[t.n]){
+          html += '<div class="load-hint">Última carga: '+lastLoadsPreview[t.n]+' kg</div>';
+        }
+        html += '</div></li>';
       });
       html += '</ul>';
       html += '<button class="btn btn-primary" id="startBtn">Iniciar Treino</button>';
@@ -553,6 +598,7 @@
     }
 
     // in progress
+    var lastLoads = loadLastLoads();
     html += '<ul class="task-list">';
     day.tasks.forEach(function(t, i){
       var checked = !!state.checks[i];
@@ -561,6 +607,12 @@
       html += '<div class="task-body"><div class="task-name">'+t.n+'</div><div class="task-detail">'+t.d+'</div>';
       if(t.rest){
         html += '<span class="timer-btn" data-idx="'+i+'" data-rest="'+t.rest+'">⏱ '+t.rest+'s</span>';
+      }
+      if(t.load){
+        var loadVal = (state.loads[t.n] !== undefined) ? state.loads[t.n] : (lastLoads[t.n] || '');
+        html += '<div class="load-row"><label for="load-'+i+'">Carga</label>';
+        html += '<input type="number" inputmode="decimal" step="0.5" min="0" id="load-'+i+'" data-name="'+t.n.replace(/"/g,'&quot;')+'" value="'+loadVal+'" placeholder="kg">';
+        html += '<label for="load-'+i+'">kg</label></div>';
       }
       html += '</div></li>';
     });
@@ -590,6 +642,11 @@
         var idx = this.getAttribute('data-idx');
         var rest = parseInt(this.getAttribute('data-rest'),10);
         startTimer(idx, rest, this);
+      });
+    });
+    todayCard.querySelectorAll('.load-row input').forEach(function(inp){
+      inp.addEventListener('input', function(){
+        setLoad(this.getAttribute('data-name'), this.value);
       });
     });
     var finishBtn = document.getElementById('finishBtn');
