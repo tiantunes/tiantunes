@@ -1,0 +1,79 @@
+# Sistema de Prospecção & Captação de Clientes
+
+CRM próprio para captar leads automaticamente no Google Maps e organizá-los num funil de vendas kanban.
+
+## Como funciona
+
+1. Você informa um tipo de negócio + localização (ex: "clínicas odontológicas" + "Curitiba, PR").
+2. O backend busca no Google Maps, extrai nome, endereço, telefone, site, nota e nº de avaliações de cada resultado.
+3. Cada lead é classificado automaticamente (HOT/WARM/COLD) com base na presença digital — empresas sem site ou com poucas avaliações pontuam mais alto, por serem bons alvos para serviços de TI/web.
+4. Os leads entram no funil como "Novo Lead" e você os arrasta entre as colunas: Novo Lead → Contato Feito → Qualificado → Proposta → Fechado/Perdido.
+
+## ⚠️ Aviso importante sobre a captação
+
+A captação usa **web scraping do Google Maps**, o que **viola os Termos de Serviço do Google**. Isso significa:
+
+- O Google pode bloquear temporariamente o IP, exigir CAPTCHA ou instabilizar a busca.
+- O scraper pode quebrar a qualquer momento se o Google mudar o layout do site.
+- Existe risco (baixo, mas real) de suspensão de contas Google associadas ao uso abusivo.
+
+O scraper foi implementado de forma **respeitosa**: um navegador por vez, delays entre requisições, limite de resultados por busca — mas isso não elimina o risco, só reduz a chance de bloqueio.
+
+**Alternativa mais segura**: trocar o `backend/src/services/scraper.ts` pela [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview) (paga por consulta, mas oficial e estável). A interface (`ScrapedLead`) foi desenhada para facilitar essa troca sem alterar o resto do sistema.
+
+## Stack
+
+- **Backend**: Node.js + TypeScript + Express + Prisma + PostgreSQL + Puppeteer
+- **Frontend**: React + TypeScript + Vite
+- **Banco**: PostgreSQL via Docker
+
+## Como rodar localmente
+
+### 1. Subir o banco de dados
+
+```bash
+docker compose up -d
+```
+
+### 2. Backend
+
+```bash
+cd backend
+cp .env.example .env
+npm install
+npm run prisma:migrate   # cria as tabelas
+npm run dev              # http://localhost:3333
+```
+
+### 3. Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev               # http://localhost:5173
+```
+
+Acesse `http://localhost:5173`, digite um nicho e uma localização, e clique em "Captar leads".
+
+## Estrutura
+
+```
+backend/
+  prisma/schema.prisma      # modelos Lead, Activity, enums de funil
+  src/
+    services/scraper.ts     # captação via Google Maps
+    services/classifier.ts  # pontuação HOT/WARM/COLD
+    routes/prospecting.ts   # POST /api/prospecting/search
+    routes/leads.ts         # CRUD de leads + mudança de etapa do funil
+frontend/
+  src/
+    components/KanbanBoard.tsx  # funil arrastar-e-soltar
+    components/SearchForm.tsx   # formulário de busca de leads
+```
+
+## Próximos passos sugeridos
+
+- Autenticação (o sistema hoje é single-user, sem login).
+- Notificações/lembretes de follow-up por lead parado numa etapa.
+- Histórico de atividades por lead na UI (o backend já registra mudanças de etapa em `Activity`).
+- Exportação de leads (CSV) e integração com WhatsApp/e-mail para contato automatizado.

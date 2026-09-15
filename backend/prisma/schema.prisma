@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum FunnelStage {
+  NOVO_LEAD
+  CONTATO_FEITO
+  QUALIFICADO
+  PROPOSTA
+  FECHADO
+  PERDIDO
+}
+
+enum LeadTemperature {
+  HOT
+  WARM
+  COLD
+}
+
+model Lead {
+  id             String          @id @default(cuid())
+  name           String
+  category       String?
+  address        String?
+  phone          String?
+  website        String?
+  googleMapsUrl  String?
+  rating         Float?
+  reviewsCount   Int?
+  searchTerm     String
+  searchLocation String
+  stage          FunnelStage     @default(NOVO_LEAD)
+  temperature    LeadTemperature @default(WARM)
+  score          Int             @default(0)
+  scoreReasons   String[]        @default([])
+  notes          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  activities     Activity[]
+
+  @@unique([name, address])
+  @@index([stage])
+  @@index([temperature])
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type      String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+}
