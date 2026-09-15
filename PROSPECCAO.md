@@ -71,6 +71,22 @@ frontend/
     components/SearchForm.tsx   # formulário de busca de leads
 ```
 
+## Direção de design (frontend) — referência salva
+
+O usuário quer, numa próxima etapa, redesenhar o frontend no estilo de um CRM SaaS (ex: referência visual tipo "Mathew Davis lead detail"):
+
+- **Layout geral**: sidebar fina à esquerda com ícones de navegação (Dashboard, Leads, Contatos, Negócios, Relatórios, Configurações), barra superior com busca global e ações rápidas (+ Novo, mail, calendário, notificações, avatar).
+- **Tema claro**, fundo cinza muito claro, cards brancos com cantos arredondados e sombra leve, acento em roxo/indigo.
+- **Tela de detalhe do lead** (não existe hoje — hoje só há o board kanban):
+  - Header do card: avatar, nome, tag de status (ex: "Hot Lead"), empresa, país, ações (buscar, editar, mais opções), botões "Send Mail" / "Convert Lead", datas de último contato e próximo compromisso.
+  - Abas: Basic Info / Company Info / Deal Info.
+  - **Stepper horizontal de status do funil** (New → Contacted → Interested → Under Review → Demo → Converted) com check nas etapas concluídas — versão visual do `FunnelStage` que já existe no backend, mas com mais granularidade do que os 6 estágios atuais.
+  - Grid de **integrações** (Gmail, Mailchimp, Outlook, Slack, Paypal, etc.) com botão "Integrate" por card.
+  - **Painel lateral direito**: "Actions" (New Task, Add Integration), contadores de Notes/Tasks/Attachments/Appointments/Call Logs com botão "Add" e navegação, e feed de "Recent Activities" (timeline com ícone, título, hora e autor) — mapeia diretamente para o model `Activity` que já existe no backend.
+- Isso é compatível com o schema atual: `Activity` já registra o que viraria a timeline de "Recent Activities"; o `FunnelStage` viraria o stepper. Precisaria de: tela de detalhe de lead (rota nova), componente de stepper, painel de atividades/notas/tasks, e (mais pra frente) integrações reais.
+
+Ainda não implementado — é só a referência para quando formos redesenhar o frontend.
+
 ## Próximos passos sugeridos
 
 - Autenticação (o sistema hoje é single-user, sem login).
