@@ -1,10 +1,26 @@
-import type { Lead, FunnelStage } from "./types";
+import type { Lead, FunnelStage, Activity } from "./types";
 
 const BASE = "/api";
 
 export async function fetchLeads(): Promise<Lead[]> {
   const res = await fetch(`${BASE}/leads`);
   if (!res.ok) throw new Error("Falha ao carregar leads");
+  return res.json();
+}
+
+export async function fetchLead(id: string): Promise<Lead & { activities: Activity[] }> {
+  const res = await fetch(`${BASE}/leads/${id}`);
+  if (!res.ok) throw new Error("Falha ao carregar lead");
+  return res.json();
+}
+
+export async function updateLeadNotes(id: string, notes: string): Promise<Lead> {
+  const res = await fetch(`${BASE}/leads/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ notes }),
+  });
+  if (!res.ok) throw new Error("Falha ao salvar notas");
   return res.json();
 }
 

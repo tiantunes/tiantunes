@@ -1,16 +1,30 @@
 import type { Lead } from "../types";
+import { initials, colorFromString } from "../utils/avatar";
 
 const TEMP_COLOR: Record<Lead["temperature"], string> = {
-  HOT: "#e5484d",
-  WARM: "#f5a623",
+  HOT: "#ef5b72",
+  WARM: "#e0a12b",
   COLD: "#4b9fea",
 };
 
-export function LeadCard({ lead, onDragStart }: { lead: Lead; onDragStart: (e: React.DragEvent, id: string) => void }) {
+export function LeadCard({
+  lead,
+  onDragStart,
+  onOpen,
+}: {
+  lead: Lead;
+  onDragStart: (e: React.DragEvent, id: string) => void;
+  onOpen: (id: string) => void;
+}) {
   return (
-    <div className="lead-card" draggable onDragStart={(e) => onDragStart(e, lead.id)}>
+    <div className="lead-card" draggable onDragStart={(e) => onDragStart(e, lead.id)} onClick={() => onOpen(lead.id)}>
       <div className="lead-card-header">
-        <strong>{lead.name}</strong>
+        <div className="lead-card-title">
+          <div className="lead-card-avatar" style={{ backgroundColor: colorFromString(lead.name) }}>
+            {initials(lead.name)}
+          </div>
+          <strong>{lead.name}</strong>
+        </div>
         <span className="badge" style={{ backgroundColor: TEMP_COLOR[lead.temperature] }}>
           {lead.temperature} · {lead.score}
         </span>
@@ -18,13 +32,7 @@ export function LeadCard({ lead, onDragStart }: { lead: Lead; onDragStart: (e: R
       {lead.category && <div className="lead-meta">{lead.category}</div>}
       {lead.address && <div className="lead-meta">{lead.address}</div>}
       <div className="lead-meta">
-        {lead.website ? (
-          <a href={lead.website} target="_blank" rel="noreferrer">
-            site
-          </a>
-        ) : (
-          <span className="no-site">sem site</span>
-        )}
+        {lead.website ? <span className="has-site">com site</span> : <span className="no-site">sem site</span>}
         {lead.phone && <span> · {lead.phone}</span>}
         {lead.rating !== null && (
           <span>

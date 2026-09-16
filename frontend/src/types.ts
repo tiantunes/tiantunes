@@ -1,6 +1,14 @@
 export type FunnelStage = "NOVO_LEAD" | "CONTATO_FEITO" | "QUALIFICADO" | "PROPOSTA" | "FECHADO" | "PERDIDO";
 export type Temperature = "HOT" | "WARM" | "COLD";
 
+export interface Activity {
+  id: string;
+  leadId: string;
+  type: string;
+  message: string;
+  createdAt: string;
+}
+
 export interface Lead {
   id: string;
   name: string;
@@ -39,3 +47,6 @@ export const STAGE_ORDER: FunnelStage[] = [
   "FECHADO",
   "PERDIDO",
 ];
+
+/** Linear progression shown in the stepper; PERDIDO is a terminal branch, not a step. */
+export const STEPPER_STAGES: FunnelStage[] = ["NOVO_LEAD", "CONTATO_FEITO", "QUALIFICADO", "PROPOSTA", "FECHADO"];

@@ -6,9 +6,11 @@ import { LeadCard } from "./LeadCard";
 export function KanbanBoard({
   leads,
   onMoveLead,
+  onOpenLead,
 }: {
   leads: Lead[];
   onMoveLead: (id: string, stage: FunnelStage) => void;
+  onOpenLead: (id: string) => void;
 }) {
   const columns = useMemo(() => {
     const grouped = new Map<FunnelStage, Lead[]>(STAGE_ORDER.map((s) => [s, []]));
@@ -42,7 +44,7 @@ export function KanbanBoard({
           </div>
           <div className="kanban-column-body">
             {columns.get(stage)?.map((lead) => (
-              <LeadCard key={lead.id} lead={lead} onDragStart={handleDragStart} />
+              <LeadCard key={lead.id} lead={lead} onDragStart={handleDragStart} onOpen={onOpenLead} />
             ))}
           </div>
         </div>
