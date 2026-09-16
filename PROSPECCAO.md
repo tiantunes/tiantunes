@@ -8,6 +8,7 @@ CRM próprio para captar leads automaticamente no Google Maps e organizá-los nu
 2. O backend busca no Google Maps, extrai nome, endereço, telefone, site, nota e nº de avaliações de cada resultado.
 3. Cada lead é classificado automaticamente (HOT/WARM/COLD) com base na presença digital — empresas sem site ou com poucas avaliações pontuam mais alto, por serem bons alvos para serviços de TI/web.
 4. Os leads entram no funil como "Novo Lead" e você os arrasta entre as colunas: Novo Lead → Contato Feito → Qualificado → Proposta → Fechado/Perdido.
+5. Para cada lead, o sistema tenta automaticamente achar a página pública do Facebook da empresa (via busca no Google) e extrair um número de WhatsApp da aba "Sobre" — ver aviso abaixo.
 
 ## ⚠️ Aviso importante sobre a captação
 
@@ -20,6 +21,16 @@ A captação usa **web scraping do Google Maps**, o que **viola os Termos de Ser
 O scraper foi implementado de forma **respeitosa**: um navegador por vez, delays entre requisições, limite de resultados por busca — mas isso não elimina o risco, só reduz a chance de bloqueio.
 
 **Alternativa mais segura**: trocar o `backend/src/services/scraper.ts` pela [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview) (paga por consulta, mas oficial e estável). A interface (`ScrapedLead`) foi desenhada para facilitar essa troca sem alterar o resto do sistema.
+
+## ⚠️ Aviso sobre o enriquecimento via Facebook
+
+`backend/src/services/enrichment.ts` busca a página pública do Facebook de cada lead (via Google, nunca pela busca do próprio Facebook) e extrai WhatsApp da aba "Sobre". Isso é **mais arriscado que o scraping do Maps**:
+
+- O Facebook detecta e bloqueia automação de forma bem mais agressiva que o Google, mesmo em páginas públicas sem login.
+- Está ligado por padrão (`enrichFacebook: true` em `scrapeGoogleMaps`) e roda pra **todos** os leads de cada busca — ou seja, cada busca de prospecção agora também gera N buscas no Google + N visitas a páginas do Facebook. Isso foi uma escolha explícita (trade-off velocidade vs. risco de bloqueio), não o padrão recomendado.
+- Se o Facebook começar a bloquear/CAPTCHA nas buscas, os logs do backend (`[enrichment] falhou: ...`) vão mostrar isso — o lead continua sendo salvo normalmente, só sem WhatsApp/Facebook.
+- Para reduzir o risco, dá pra mudar `enrichFacebook` pra `false` por padrão e transformar num botão manual por lead (mais lento, mas mais seguro) — ver `backend/src/services/scraper.ts`.
+- A confirmação de que a página do Facebook é da mesma empresa usa um match simples (número do endereço do Google Maps precisa aparecer no endereço do Facebook); isso evita pegar contato de uma empresa homônima errada, mas não é 100% à prova de falha.
 
 ## Stack
 

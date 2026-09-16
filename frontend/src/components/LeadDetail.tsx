@@ -110,6 +110,16 @@ export function LeadDetail({
             </div>
           </div>
           <div className="lead-header-actions">
+            {lead.whatsapp && (
+              <a
+                className="btn-outline"
+                href={`https://wa.me/55${lead.whatsapp.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                WhatsApp
+              </a>
+            )}
             {lead.phone && (
               <a className="btn-outline" href={`tel:${lead.phone}`}>
                 Ligar
@@ -146,6 +156,7 @@ export function LeadDetail({
           <div className="tab-content grid-2">
             <Field label="Nome" value={lead.name} />
             <Field label="Telefone" value={lead.phone ?? "—"} />
+            <Field label="WhatsApp" value={lead.whatsapp ?? "não encontrado"} />
             <Field label="Endereço" value={lead.address ?? "—"} />
             <Field label="Localização buscada" value={lead.searchLocation} />
           </div>
@@ -162,6 +173,18 @@ export function LeadDetail({
                   </a>
                 ) : (
                   "sem site"
+                )
+              }
+            />
+            <Field
+              label="Facebook"
+              value={
+                lead.facebookUrl ? (
+                  <a href={lead.facebookUrl} target="_blank" rel="noreferrer">
+                    ver página
+                  </a>
+                ) : (
+                  "não encontrado"
                 )
               }
             />

@@ -34,6 +34,8 @@ export interface Lead {
   phone: string | null;
   website: string | null;
   googleMapsUrl: string | null;
+  whatsapp: string | null;
+  facebookUrl: string | null;
   rating: number | null;
   reviewsCount: number | null;
   searchTerm: string;

@@ -30,6 +30,8 @@ model Lead {
   phone          String?
   website        String?
   googleMapsUrl  String?
+  whatsapp       String?
+  facebookUrl    String?
   rating         Float?
   reviewsCount   Int?
   searchTerm     String

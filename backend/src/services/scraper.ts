@@ -1,4 +1,5 @@
 import puppeteer, { Browser, Page } from "puppeteer";
+import { enrichWithFacebook } from "./enrichment";
 
 export interface ScrapedLead {
   name: string;
@@ -9,6 +10,8 @@ export interface ScrapedLead {
   googleMapsUrl: string | null;
   rating: number | null;
   reviewsCount: number | null;
+  whatsapp: string | null;
+  facebookUrl: string | null;
 }
 
 export interface ScrapeOptions {
@@ -16,6 +19,14 @@ export interface ScrapeOptions {
   location: string;
   /** Hard cap to avoid hammering Google; keep this conservative. */
   maxResults?: number;
+  /**
+   * Also look up each lead's public Facebook page (via Google search) for a
+   * WhatsApp number. Doubles the page loads per lead and hits Facebook's
+   * markup and anti-automation defenses, both more fragile/risky than the
+   * Maps scraping itself — defaults on since that's the point of this
+   * feature, but keep an eye on failure logs if Facebook starts blocking.
+   */
+  enrichFacebook?: boolean;
 }
 
 const DEFAULT_MAX_RESULTS = 20;
@@ -87,13 +98,22 @@ export async function scrapeGoogleMaps(options: ScrapeOptions): Promise<ScrapedL
 
     const uniqueLinks = Array.from(new Set(cardLinks)).slice(0, maxResults);
     const results: ScrapedLead[] = [];
+    const enrichFacebook = options.enrichFacebook ?? true;
 
     for (const link of uniqueLinks) {
       try {
         await page.goto(link, { waitUntil: "networkidle2", timeout: 30000 });
         await sleep(NAV_DELAY_MS);
         const lead = await extractLeadFromPlacePage(page, link);
-        if (lead) results.push(lead);
+        if (!lead) continue;
+
+        if (enrichFacebook) {
+          const enrichment = await enrichWithFacebook(page, lead.name, lead.address);
+          lead.whatsapp = enrichment.whatsapp;
+          lead.facebookUrl = enrichment.facebookUrl;
+        }
+
+        results.push(lead);
       } catch (err) {
         console.warn(`[scraper] falhou ao ler ${link}:`, (err as Error).message);
         continue;
@@ -175,6 +195,8 @@ async function extractLeadFromPlacePage(page: Page, url: string): Promise<Scrape
       googleMapsUrl: pageUrl,
       rating,
       reviewsCount,
+      whatsapp: null,
+      facebookUrl: null,
     };
   }, url);
 }

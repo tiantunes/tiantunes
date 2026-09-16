@@ -33,6 +33,7 @@ export function LeadCard({
       {lead.address && <div className="lead-meta">{lead.address}</div>}
       <div className="lead-meta">
         {lead.website ? <span className="has-site">com site</span> : <span className="no-site">sem site</span>}
+        {lead.whatsapp && <span className="has-whatsapp"> · WhatsApp</span>}
         {lead.phone && <span> · {lead.phone}</span>}
         {lead.rating !== null && (
           <span>
