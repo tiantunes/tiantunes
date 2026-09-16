@@ -141,8 +141,6 @@ async function acceptConsentIfPresent(page: Page): Promise<void> {
 
 async function extractLeadFromPlacePage(page: Page, url: string): Promise<ScrapedLead | null> {
   return page.evaluate((pageUrl) => {
-    const text = (sel: string) => document.querySelector(sel)?.textContent?.trim() ?? null;
-
     const name = document.querySelector("h1")?.textContent?.trim();
     if (!name) return null;
 
