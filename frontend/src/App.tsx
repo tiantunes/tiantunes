@@ -1,14 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Lead, FunnelStage } from "./types";
 import { fetchLeads, updateLeadStage, searchLeads } from "./api";
-import { Sidebar } from "./components/Sidebar";
+import { Sidebar, type View } from "./components/Sidebar";
 import { Topbar } from "./components/Topbar";
 import { KanbanBoard } from "./components/KanbanBoard";
 import { ProspectingModal } from "./components/ProspectingModal";
 import { LeadDetail } from "./components/LeadDetail";
+import { Dashboard } from "./components/Dashboard";
+import { Reports } from "./components/Reports";
+import { Settings } from "./components/Settings";
 import "./styles.css";
 
 export default function App() {
+  const [view, setView] = useState<View>("leads");
   const [leads, setLeads] = useState<Lead[]>([]);
   const [query, setQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -64,18 +68,31 @@ export default function App() {
     }
   };
 
+  const navigate = (v: View) => {
+    setSelectedLeadId(null);
+    setView(v);
+  };
+
   return (
     <div className="app-shell">
-      <Sidebar />
+      <Sidebar view={view} onNavigate={navigate} />
       <div className="app-main">
         <Topbar query={query} onQueryChange={setQuery} onNewSearch={() => setModalOpen(true)} />
         <div className="app-content">
           {error && <div className="error-banner">{error}</div>}
-          {selectedLeadId ? (
-            <LeadDetail leadId={selectedLeadId} onBack={() => setSelectedLeadId(null)} onStageChange={handleMoveLead} />
-          ) : (
-            <KanbanBoard leads={filteredLeads} onMoveLead={handleMoveLead} onOpenLead={setSelectedLeadId} />
-          )}
+
+          {view === "dashboard" && <Dashboard leads={leads} />}
+
+          {view === "leads" &&
+            (selectedLeadId ? (
+              <LeadDetail leadId={selectedLeadId} onBack={() => setSelectedLeadId(null)} onStageChange={handleMoveLead} />
+            ) : (
+              <KanbanBoard leads={filteredLeads} onMoveLead={handleMoveLead} onOpenLead={setSelectedLeadId} />
+            ))}
+
+          {view === "reports" && <Reports leads={filteredLeads} />}
+
+          {view === "settings" && <Settings />}
         </div>
       </div>
       <ProspectingModal

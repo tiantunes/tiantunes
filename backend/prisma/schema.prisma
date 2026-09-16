@@ -48,6 +48,26 @@ model Lead {
   @@index([temperature])
 }
 
+/// Singleton row (id always "default") holding the lead-scoring weights used by classifier.ts.
+model ClassifierConfig {
+  id                          String   @id @default("default")
+  noWebsiteScore              Int      @default(40)
+  noPhoneScore                Int      @default(5)
+  fewReviewsThreshold         Int      @default(10)
+  fewReviewsScore             Int      @default(20)
+  moderateReviewsThreshold    Int      @default(50)
+  moderateReviewsScore        Int      @default(10)
+  lowRatingThreshold          Float    @default(3.5)
+  lowRatingScore              Int      @default(15)
+  highRatingThreshold         Float    @default(4.5)
+  highRatingReviewsThreshold  Int      @default(50)
+  highRatingScore             Int      @default(10)
+  noRatingScore                Int     @default(10)
+  hotThreshold                Int      @default(55)
+  warmThreshold                Int     @default(30)
+  updatedAt                    DateTime @updatedAt
+}
+
 model Activity {
   id        String   @id @default(cuid())
   leadId    String

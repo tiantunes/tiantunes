@@ -1,6 +1,23 @@
 export type FunnelStage = "NOVO_LEAD" | "CONTATO_FEITO" | "QUALIFICADO" | "PROPOSTA" | "FECHADO" | "PERDIDO";
 export type Temperature = "HOT" | "WARM" | "COLD";
 
+export interface ClassifierWeights {
+  noWebsiteScore: number;
+  noPhoneScore: number;
+  fewReviewsThreshold: number;
+  fewReviewsScore: number;
+  moderateReviewsThreshold: number;
+  moderateReviewsScore: number;
+  lowRatingThreshold: number;
+  lowRatingScore: number;
+  highRatingThreshold: number;
+  highRatingReviewsThreshold: number;
+  highRatingScore: number;
+  noRatingScore: number;
+  hotThreshold: number;
+  warmThreshold: number;
+}
+
 export interface Activity {
   id: string;
   leadId: string;

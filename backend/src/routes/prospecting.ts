@@ -3,6 +3,7 @@ import { z } from "zod";
 import { prisma } from "../db";
 import { scrapeGoogleMaps } from "../services/scraper";
 import { classifyLead } from "../services/classifier";
+import { getClassifierConfig } from "./settings";
 
 export const prospectingRouter = Router();
 
@@ -23,15 +24,19 @@ prospectingRouter.post("/search", async (req, res) => {
   try {
     const scraped = await scrapeGoogleMaps({ keyword, location, maxResults });
     console.log(`[prospecting] ${scraped.length} leads retornados pelo scraper`);
+    const weights = await getClassifierConfig();
 
     const created = [];
     for (const item of scraped) {
-      const classification = classifyLead({
-        website: item.website,
-        rating: item.rating,
-        reviewsCount: item.reviewsCount,
-        phone: item.phone,
-      });
+      const classification = classifyLead(
+        {
+          website: item.website,
+          rating: item.rating,
+          reviewsCount: item.reviewsCount,
+          phone: item.phone,
+        },
+        weights,
+      );
 
       const lead = await prisma.lead.upsert({
         where: { name_address: { name: item.name, address: item.address ?? "" } },
