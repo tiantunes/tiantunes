@@ -18,9 +18,11 @@ prospectingRouter.post("/search", async (req, res) => {
     return res.status(400).json({ error: parsed.error.flatten() });
   }
   const { keyword, location, maxResults } = parsed.data;
+  console.log(`[prospecting] busca recebida: "${keyword}" em "${location}"`);
 
   try {
     const scraped = await scrapeGoogleMaps({ keyword, location, maxResults });
+    console.log(`[prospecting] ${scraped.length} leads retornados pelo scraper`);
 
     const created = [];
     for (const item of scraped) {

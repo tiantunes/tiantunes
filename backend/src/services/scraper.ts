@@ -52,11 +52,20 @@ export async function scrapeGoogleMaps(options: ScrapeOptions): Promise<ScrapedL
     );
     await page.setViewport({ width: 1366, height: 900 });
 
+    console.log(`[scraper] navegando para ${url}`);
     await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
     await sleep(NAV_DELAY_MS);
 
+    await acceptConsentIfPresent(page);
+
     const feedSelector = 'div[role="feed"]';
-    await page.waitForSelector(feedSelector, { timeout: 15000 }).catch(() => null);
+    const feedFound = await page.waitForSelector(feedSelector, { timeout: 15000 }).catch(() => null);
+    if (!feedFound) {
+      console.warn(
+        `[scraper] feed de resultados não apareceu (título da página: "${await page.title()}"). ` +
+          "O Google pode ter mudado o layout, mostrado um CAPTCHA, ou a busca não teve resultados.",
+      );
+    }
 
     // Scroll the results feed to load more cards, up to maxResults.
     let previousCount = 0;
@@ -74,6 +83,7 @@ export async function scrapeGoogleMaps(options: ScrapeOptions): Promise<ScrapedL
     const cardLinks = await page.$$eval('div[role="feed"] a[href^="https://www.google.com/maps/place"]', (as) =>
       as.map((a) => (a as HTMLAnchorElement).href),
     );
+    console.log(`[scraper] ${cardLinks.length} cards encontrados na listagem`);
 
     const uniqueLinks = Array.from(new Set(cardLinks)).slice(0, maxResults);
     const results: ScrapedLead[] = [];
@@ -84,15 +94,48 @@ export async function scrapeGoogleMaps(options: ScrapeOptions): Promise<ScrapedL
         await sleep(NAV_DELAY_MS);
         const lead = await extractLeadFromPlacePage(page, link);
         if (lead) results.push(lead);
-      } catch {
-        // Skip listings that fail to load; keep going with the rest.
+      } catch (err) {
+        console.warn(`[scraper] falhou ao ler ${link}:`, (err as Error).message);
         continue;
       }
     }
 
+    console.log(`[scraper] ${results.length} leads extraídos com sucesso`);
     return results;
   } finally {
     await browser.close();
+  }
+}
+
+/**
+ * Google shows a cookie-consent interstitial ("Antes de continuar...") to
+ * browsers without prior consent cookies. Puppeteer always starts clean, so
+ * this appears on every run and silently blocks the search results unless
+ * dismissed.
+ */
+async function acceptConsentIfPresent(page: Page): Promise<void> {
+  const clicked = await page.evaluate(() => {
+    const candidates = Array.from(document.querySelectorAll("button"));
+    const target = candidates.find((btn) => {
+      const label = (btn.textContent ?? btn.getAttribute("aria-label") ?? "").trim().toLowerCase();
+      return (
+        label === "aceitar tudo" ||
+        label === "accept all" ||
+        label === "i agree" ||
+        label === "concordo" ||
+        label.startsWith("aceitar")
+      );
+    });
+    if (target) {
+      (target as HTMLButtonElement).click();
+      return true;
+    }
+    return false;
+  });
+
+  if (clicked) {
+    console.log("[scraper] tela de consentimento de cookies detectada e aceita");
+    await sleep(NAV_DELAY_MS);
   }
 }
 
